@@ -2,14 +2,13 @@
 
 ### 简介
 
-**使用UTS开发的剪切板功能，用来复制粘贴文字、图片，支持从相册复制图片粘贴到应用，比如复制的图片可以在微信粘贴**
+**使用 UTS 开发的剪切板功能，用来复制粘贴文字、图片，支持从相册复制图片粘贴到应用，比如复制的图片可以在微信粘贴**
 
-**暂未对齐 `uni.setClipboardData` `uni.getClipboardData	` 系统API，不喜勿喷**
-
+**暂未对齐 `uni.setClipboardData` `uni.getClipboardData	` 系统 API，不喜勿喷**
 
 ### 使用方法
 
-**导入插件后，在页面使用以下方式导入，或者导入示例项目，示例项目为Uniapp-x项目，Uniapp的示例项目在文档最后面 [传送门](#uniapp-demo)**
+**导入插件后，在页面使用以下方式导入，或者导入示例项目，示例项目为 Uniapp-x 项目，Uniapp 的示例项目在这里 [传送门](https://github.com/worryzyy/worry-clipboard-uniapp.git)**
 
 `import { ctrlC, ctrlV, ctrlCImg, ctrlVImg, clearCV  } from '@/uni_modules/worry-clipboard'`
 
@@ -23,40 +22,39 @@
 
 #### 参数
 
-text | base64Text {String} 
+text | base64Text {String}
 
-| 参数		| 类型		|  描述									|
-|:----		|:----		|:----									|
-| text		|  String	|  调用`ctrlC`时传入需要复制的文字		|
-| base64Text|  String	|  调用`ctrlCImg`时传入图片的Base64编码	|
-
+| 参数       | 类型   | 描述                                   |
+| :--------- | :----- | :------------------------------------- |
+| text       | String | 调用`ctrlC`时传入需要复制的文字        |
+| base64Text | String | 调用`ctrlCImg`时传入图片的 Base64 编码 |
 
 callback {function ({ msg, data })} 回调方法
 
-| 参数	| 类型		|  描述										|
-|:----	|:----		|:----										|
-| msg	|  String	|  API调用结果描述							|
-| data	|  String	|  粘贴文字返回空字符串，粘贴图片返回Base64编码	|
+| 参数 | 类型   | 描述                                           |
+| :--- | :----- | :--------------------------------------------- |
+| msg  | String | API 调用结果描述                               |
+| data | String | 粘贴文字返回空字符串，粘贴图片返回 Base64 编码 |
 
 ### 注意！！
 
-如果需要使用复制粘贴图片的功能，请一定打自定义基座运行，如果是uniapp的项目，不要使用测试证书打自定义基座
+如果需要使用复制粘贴图片的功能，请一定打自定义基座运行，如果是 uniapp 的项目，不要使用测试证书打自定义基座
 
-#### Android自定义基座
+#### Android 自定义基座
 
 找到`worry-clipboard/utssdk`目录下面的`AndroidManifest.xml`文件
 ![](https://mp-bc8d1f0a-3356-4a4e-8592-f73a3371baa2.cdn.bspapp.com/uts-clipboard/963e52129edc6e3ac51af680bcace00.png)
 这三个地方需要换成你自己的包名，其中`android:authorities="io.dcloud.uniappx.provider"`节点的格式是`你的包名`+`.provider`
 
-#### IOS自定义基座
+#### IOS 自定义基座
 
-Xcode需要15.2以上的版本才能调试自定义基座，如果是低版本的Xcode，修改了IOS端的插件代码就会报错
-（我的Mac系统版本太低了，用不了15以上的Xcode，每次修改IOS端的代码都需要重新打基座🙉）
+Xcode 需要 15.2 以上的版本才能调试自定义基座，如果是低版本的 Xcode，修改了 IOS 端的插件代码就会报错
+（我的 Mac 系统版本太低了，用不了 15 以上的 Xcode，每次修改 IOS 端的代码都需要重新打基座 🙉）
 
 ### 示例
 
 ```javascript
-/* 
+/*
  *复制文本
  */
 const copyT = () => {
@@ -69,7 +67,7 @@ const copyT = () => {
 	})
 }
 
-/* 
+/*
  *粘贴文本
  */
 const pasteT = () => {
@@ -107,7 +105,7 @@ const copyLocalImage = () => {
 
 }
 
-/* 
+/*
  *  复制网络图片
  */
 const copyNetworkImage = () => {
@@ -143,7 +141,7 @@ const copyNetworkImage = () => {
 	})
 }
 
-/* 
+/*
  *粘贴图片
  */
 const pasteImg = () => {
@@ -159,7 +157,7 @@ const pasteImg = () => {
 }
 
 
-/* 
+/*
  *清除剪切板
  */
 const clearCLIP = () => {
@@ -176,10 +174,7 @@ const clearCLIP = () => {
 
 ### Tips
 
-复制图片`ctrlCImg(data,callback)`传入的Base64编码与粘贴图片`ctrlVImg(callback)`返回的Base64编码均不带`data:image/png;base64,`
-
-### Uniapp-demo
-[项目下载(vue3)](https://mp-bc8d1f0a-3356-4a4e-8592-f73a3371baa2.cdn.bspapp.com/uts-clipboard/worry-clipboard-uniapp.rar)
+复制图片`ctrlCImg(data,callback)`传入的 Base64 编码与粘贴图片`ctrlVImg(callback)`返回的 Base64 编码均不带`data:image/png;base64,`
 
 ### 赞赏
 
@@ -187,5 +182,4 @@ const clearCLIP = () => {
 
 <div><img src="https://mp-bc8d1f0a-3356-4a4e-8592-f73a3371baa2.cdn.bspapp.com/native-dialog/Appreciate.jpg" width="400"/></div>
 
-### 完结撒花 ✿✿ヽ(°▽°)ノ✿
-
+### 完结撒花 ✿✿ ヽ(°▽°)ノ ✿
