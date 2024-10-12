@@ -1,0 +1,103 @@
+
+
+import { UIPasteboard, UIImage } from "UIKit";
+import { NSData } from "Foundation";
+
+
+type ClipboardResult = {
+	msg : string,
+	data : string
+}
+
+
+class MyClipboard {
+	mPasteboard : UIPasteboard
+	constructor() {
+		this.mPasteboard = UIPasteboard.general
+	}
+	/*
+	 *  复制 
+	 */
+	copyClipboardData(data : string, callback : (result : ClipboardResult) => void) : void {
+		this.mPasteboard.string = data;
+		callback(funCallResult('复制成功', data));
+	}
+
+	/* 
+	 *  粘贴 
+	 */
+	pasteClipboardData(callback : (result : ClipboardResult) => void) : void {
+		// console.log(this.mPasteboard.string, this.mPasteboard.name, this.mPasteboard.string == null, this.mPasteboard.hasStrings);
+		if (this.mPasteboard.string != null) {
+			callback(funCallResult('粘贴成功', this.mPasteboard.string as string));
+		} else {
+			callback(funCallResult('剪切板是空的', ''));
+		}
+	}
+
+	/* 
+	 * 清除
+	 */
+	clearClipboardData(callback : (result : ClipboardResult) => void) : void {
+		UIPasteboard.remove(withName = this.mPasteboard.name)
+		callback(funCallResult('清除剪切板成功', ''));
+	}
+
+	/* 
+	 * 复制图片
+	 */
+	copyImage(base64Data : string, callback : (result : ClipboardResult) => void) : void {
+		this.mPasteboard.image = base64ToUiImage(base64Data);
+		callback(funCallResult('复制图片成功', ''));
+	}
+
+	/*
+	 * 粘贴图片
+	 */
+	pasteImage(callback : (result : ClipboardResult) => void) : void {
+		if (this.mPasteboard.hasImages) {
+			try {
+				let imgdataBaseString = this.mPasteboard.image!.pngData()!.base64EncodedString();
+				callback(funCallResult('粘贴图片成功', imgdataBaseString));
+			} catch (e) {
+				console.log(e)
+				callback(funCallResult('粘贴图片出错啦', ''));
+			}
+		} else {
+			callback(funCallResult('剪切板没有图片', '')); // 处理没有图片的情况
+		}
+	}
+}
+
+function base64ToUiImage(base64Data : string) : UIImage | null {
+	// 将 Base64 字符串解码为 Data
+	let imageData = NSData.init(base64Encoded = base64Data);
+	if (imageData != null) {
+		let image = UIImage.init(data = imageData as Data);
+		return image;
+	}
+	// 解码失败，返回 null
+	return null;
+}
+
+function funCallResult(msg : string, data : string) : ClipboardResult {
+	return { msg, data } as ClipboardResult
+}
+
+
+const MyClipboardOb = new MyClipboard();
+export function ctrlC(data : string, callback : (result : ClipboardResult) => void) : void {
+	MyClipboardOb.copyClipboardData(data, callback);
+}
+export function ctrlV(callback : (result : ClipboardResult) => void) : void {
+	MyClipboardOb.pasteClipboardData(callback);
+}
+export function ctrlCImg(data : string, callback : (result : ClipboardResult) => void) : void {
+	MyClipboardOb.copyImage(data, callback);
+}
+export function ctrlVImg(callback : (result : ClipboardResult) => void) : void {
+	MyClipboardOb.pasteImage(callback);
+}
+export function clearCV(callback : (result : ClipboardResult) => void) : void {
+	MyClipboardOb.clearClipboardData(callback);
+}
